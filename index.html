@@ -27,6 +27,7 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
       width: 100%;
       max-width: 420px;
+      position: relative;
     }
 
     .form-container h2 {
@@ -83,12 +84,83 @@
     .submit-btn:hover {
       background-color: #c82333;
     }
+
+    /* Popup styles */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .popup-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .popup-container {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .popup-overlay.active .popup-container {
+      transform: scale(1);
+    }
+
+    .popup-icon {
+      font-size: 3.5rem;
+      color: #4CAF50;
+      margin-bottom: 1rem;
+    }
+
+    .popup-title {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+
+    .popup-message {
+      color: #555;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .popup-btn {
+      padding: 0.7rem 1.5rem;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .popup-btn:hover {
+      background-color: #45a049;
+    }
   </style>
 </head>
 <body>
   <div class="form-container">
     <h2>Delete Your Account</h2>
-    <form>
+    <form id="deleteForm">
       <div class="form-group">
         <label for="email">Email Address</label>
         <input type="email" id="email" name="email" placeholder="Enter your email" required />
@@ -107,5 +179,35 @@
       <button type="submit" class="submit-btn">Delete Account</button>
     </form>
   </div>
+
+  <!-- Popup HTML -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-container">
+      <div class="popup-icon">✓</div>
+      <h3 class="popup-title">Request Sent</h3>
+      <p class="popup-message">We will send you a confirmation email soon. Hope to see you again!</p>
+      <button class="popup-btn" id="popupBtn">OK</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('deleteForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Show the popup
+      document.getElementById('popupOverlay').classList.add('active');
+      
+      // Here you would normally submit the form data to your server
+      // For this example, we're just showing the popup
+    });
+
+    document.getElementById('popupBtn').addEventListener('click', function() {
+      // Hide the popup
+      document.getElementById('popupOverlay').classList.remove('active');
+      
+      // Optional: Reset the form
+      document.getElementById('deleteForm').reset();
+    });
+  </script>
 </body>
 </html>
